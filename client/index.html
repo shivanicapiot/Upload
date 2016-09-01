@@ -1,11 +1,36 @@
 <html>
 	<head>
-		<title>Home</title>
+		<title></title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.4.1/jquery.min.js">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
+  <script type="text/javascript" src="node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
+  <script type="text/javascript" src="node_modules/ng-file-upload/dist/ng-file-upload-shim.min.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+ 
+
+
+
+<!-- Latest compiled and minified JavaScript -->
+
+
+
+
+
+  
 	</head>
 	<body ng-app="fileUpload">
-		<h1>Angular Node File Upload</h1>
+  <div class="container">
+
+		<div class="jumbotron" style="background: lightgreen;"><h1>File Uploader</h1><span class="glyphicon glyphicon-upload" style="font-size: 50px;"></div>
+  </div>
+  <blockquote class="text-info bg-info ">Try Uploading</blockquote>
         <form  ng-controller="MyCtrl as up" name="up.upload_form">
-                Single Image with validations
+                
             <input 
                 type="file" 
                 ngf-select 
@@ -14,11 +39,19 @@
                 
                 ngf-max-size="20MB" 
                 />
-                 <button ng-click="up.getData()">Get Data</button>
+                <br>
+
+                 <button class="btn btn-info" ng-click="up.getData()"><span class="glyphicon glyphicon-info-sign">Get Data</button>
+                  <button class="btn btn-danger"  ng-click="up.deleteAll()"><span class="glyphicon glyphicon-trash"></span>Delete All</button>
+                
+
           <ul>
-              <li ng-repeat="d in files">{{d}}
-              <button ng-click="up.removeRow(files);up.deleteFiles(d);">Delete</button>
+          <div class="btn-group-vertical">
+              <li class="text-success" ng-repeat="d in files"  ><a href="#">{{d}}</a>
+
               
+              <button  class="btn btn-info" ng-click="up.removeRow($index);up.deleteFiles(d);"><span class="glyphicon glyphicon-trash">Delete</button>
+              </div>
               
 
 
@@ -29,26 +62,19 @@
 
 
           </ul>
-         
 
-         
-
-
-
-          </ul>
-            Image thumbnail: <img style="width:100px;" ng-show="!!up.file" ngf-thumbnail="up.file || '/thumb.jpg'"/>
+          <p class="text-success">Image thumbnail:</p> <img class="img-thumbnail" style="width:300px;" ng-show="!!up.file" ngf-thumbnail="up.file || '/thumb.jpg'"/>
             <i ng-show="up.upload_form.file.$error.required">*required</i><br>
             <i ng-show="up.upload_form.file.$error.maxSize">File too large 
             {{up.file.size / 1000000|number:1}}MB: max 20M</i>
            <!--  Multiple files
             <div class="button" ngf-select ng-model="up.files" ngf-multiple="true">Select</div>
             Drop files: <div ngf-drop ng-model="up.files" class="drop-box">Drop</div> -->
-            <button type="submit" ng-click="up.submit()">submit</button>
-            <p>{{up.progress}}</p>
+            <button class="btn btn-success" type="submit"  ng-click="up.submit()"><span class="glyphicon glyphicon-upload">submit</button>
+            <br>
+            <br>
+            <p><progress class="progress progress-striped progress-warning"  value="progressPercentage" progressmax="100"></progress>{{up.progressPercentage}}</p>
         </form>
 	</body>
-	<script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
-	<script type="text/javascript" src="node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
-	<script type="text/javascript" src="node_modules/ng-file-upload/dist/ng-file-upload-shim.min.js"></script>
-	<script type="text/javascript" src="main.js"></script>
+	
 </html>

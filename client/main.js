@@ -44,9 +44,25 @@ angular.module('fileUpload', ['ngFileUpload'])
                                // console.log("http not working");
                         });
         };
+         vm.deleteAll = function(fname) {
+           
+                $http.post('http://localhost:3000/deleteall')
+                        .success(function(data) {
+                                //$scope.result = data;
+                                //make arry containing files empty to remove the list from frontend
+                                $scope.files = [];
+
+                                //console.log(result);
+                        })
+                        .error(function(data) {
+                                console.log('Error: ' + data);
+                              
+                        });
+        };
 
 
-vm.removeRow = function(name){
+
+vm.removeRow = function(idx){
     console.log("hey");
           var index = 0;
           var comArr = eval( $scope.files );
@@ -59,7 +75,7 @@ vm.removeRow = function(name){
           if( index === -1 ) {
                alert( "Something gone wrong" );
           }
-          $scope.files.splice( index, 1 );
+          $scope.files.splice( idx, 1 );
        };
 
     
@@ -73,14 +89,15 @@ vm.removeRow = function(name){
             } else {
                 $window.alert('an error occured');
             }
-        }, function (resp) { //catch error
+        }, function (resp) { //catoo error
             console.log('Error status: ' + resp.status);
             $window.alert('Error status: ' + resp.status);
         }, function (evt) { 
             console.log(evt);
-            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-            vm.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
+            $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log(progressPercentage)
+            console.log('progress: ' + $scope.progressPercentage + '% ' + evt.config.data.file.name);
+            vm.progress = 'progress: ' + $scope.progressPercentage + '% '; // capture upload progress
         });
     };
 }]);
